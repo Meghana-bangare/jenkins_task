@@ -50,20 +50,21 @@ pipeline {
         always {
             echo 'Sending email notification...'
             emailext (
-                to: "${EMAIL_RECIPIENT}",
-                subject: "Jenkins Pipeline Status - ${currentBuild.fullDisplayName}: ${currentBuild.currentResult}",
-                body: """
-                    Hello,
+    to: "${EMAIL_RECIPIENT}",
+    subject: "Jenkins Pipeline Status - ${currentBuild.fullDisplayName}: ${currentBuild.currentResult}",
+    body: """
+        Hello,
 
-                    The Jenkins Pipeline '${currentBuild.fullDisplayName}' has finished with status: ${currentBuild.currentResult}.
-                    
-                    Check the logs for more details.
-                    
-                    Regards,
-                    Jenkins CI Server
-                """,
-                attachLog: true
-            )
+        The Jenkins Pipeline '${currentBuild.fullDisplayName}' has finished with status: ${currentBuild.currentResult}.
+        
+        Check the logs for more details.
+        
+        Regards,
+        Jenkins CI Server
+    """,
+    attachLog: true
+)
+
         }
         success {
             echo 'Pipeline completed successfully!'
