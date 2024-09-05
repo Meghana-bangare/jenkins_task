@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = "${WORKSPACE}" // Pipeline workspace directory
+        DIRECTORY_PATH = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\pipeline task"
         EMAIL_RECIPIENT = 'meghanabangare@gmail.com'
     }
 
