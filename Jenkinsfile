@@ -6,7 +6,6 @@ pipeline {
         TESTING_ENVIRONMENT = "nextjs-app-testing-environment"
         PRODUCTION_ENVIRONMENT = "MeghanaBangare_nextjs-app-production-environment"
         JENKINS_LOG_PATH = "C:\\ProgramData\\Jenkins\\.jenkins\\jobs\\Github-Jenkins-pipeline\\builds\\21\\log"
-        EMAIL_RECIPIENT = 'meghanabangare@gmail.com'  // Your email address for notifications
     }
 
     stages {
@@ -22,7 +21,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: "${EMAIL_RECIPIENT}",
+                        to: "meghanabangare@gmail.com",
                         subject: "Unit and Integration Tests - Success",
                         body: "The Unit and Integration Tests have passed successfully.",
                         attachLog: true
@@ -30,7 +29,7 @@ pipeline {
                 }
                 failure {
                     emailext (
-                        to: "${EMAIL_RECIPIENT}",
+                        to: "meghanabangare@gmail.com",
                         subject: "Unit and Integration Tests - Failure",
                         body: "The Unit and Integration Tests failed. Check logs for more details.",
                         attachLog: true
@@ -50,7 +49,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: "${EMAIL_RECIPIENT}",
+                        to: "meghanabangare@gmail.com",
                         subject: "Security Scan - Success",
                         body: "The Security Scan completed successfully.",
                         attachLog: true
@@ -58,7 +57,7 @@ pipeline {
                 }
                 failure {
                     emailext (
-                        to: "${EMAIL_RECIPIENT}",
+                        to: "meghanabangare@gmail.com",
                         subject: "Security Scan - Failure",
                         body: "The Security Scan failed. Check logs for more details.",
                         attachLog: true
