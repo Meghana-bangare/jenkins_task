@@ -13,43 +13,72 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build Stage'
-                // Add your build tool like Maven or Gradle if necessary
             }
         }
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Testing Stage'
-                // Run unit tests using JUnit or integration tests using Selenium
+            }
+            post {
+                success {
+                    emailext (
+                        to: "${EMAIL_RECIPIENT}",
+                        subject: "Unit and Integration Tests - Success",
+                        body: "The Unit and Integration Tests have passed successfully.",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext (
+                        to: "${EMAIL_RECIPIENT}",
+                        subject: "Unit and Integration Tests - Failure",
+                        body: "The Unit and Integration Tests failed. Check logs for more details.",
+                        attachLog: true
+                    )
+                }
             }
         }
         stage('Code Analysis') {
             steps {
                 echo 'Code Analysis Stage'
-                // Integrate a code analysis tool like SonarQube or Checkstyle
             }
         }
         stage('Security Scan') {
             steps {
                 echo 'Security Stage'
-                // Perform a security scan using tools like OWASP ZAP or SonarQube
+            }
+            post {
+                success {
+                    emailext (
+                        to: "${EMAIL_RECIPIENT}",
+                        subject: "Security Scan - Success",
+                        body: "The Security Scan completed successfully.",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext (
+                        to: "${EMAIL_RECIPIENT}",
+                        subject: "Security Scan - Failure",
+                        body: "The Security Scan failed. Check logs for more details.",
+                        attachLog: true
+                    )
+                }
             }
         }
         stage('Deploy to Staging') {
             steps {
                 echo 'Deployment Stage'
-                // Deploy the application to a staging server, e.g., AWS EC2
             }
         }
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Integration Stage'
-                // Run integration tests on the staging environment
             }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'Production Stage'
-                // Deploy the application to a production server, e.g., AWS EC2
             }
         }
     }
@@ -58,15 +87,15 @@ pipeline {
         always {
             echo 'Pipeline Completed.'
             emailext (
-                to: "${EMAIL_RECIPIENT}",
+                to: "meghanabangare@gmail.com",
                 subject: "Pipeline Status - ${currentBuild.fullDisplayName}: ${currentBuild.currentResult}",
                 body: """
                     Hello,
 
                     The Jenkins Pipeline '${currentBuild.fullDisplayName}' has finished with status: ${currentBuild.currentResult}.
-                    
+
                     Check the logs for more details.
-                    
+
                     Regards,
                     Jenkins CI Server
                 """,
@@ -75,22 +104,9 @@ pipeline {
         }
         success {
             echo 'Pipeline completed successfully!'
-            emailext (
-                to: "${EMAIL_RECIPIENT}",
-                subject: "Pipeline Status - Success",
-                body: "Pipeline succeeded. All stages completed successfully."
-            )
         }
         failure {
             echo 'Pipeline failed!'
-            emailext (
-                to: "${EMAIL_RECIPIENT}",
-                subject: "Pipeline Status - Failure",
-                body: "Pipeline failed. Check logs for more details."
-            )
         }
     }
 }
-
-
-
